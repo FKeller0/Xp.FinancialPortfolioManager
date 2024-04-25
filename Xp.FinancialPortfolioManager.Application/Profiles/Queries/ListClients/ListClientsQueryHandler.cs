@@ -9,15 +9,13 @@ namespace Xp.FinancialPortfolioManager.Application.Profiles.Queries.ListClients
         IClientsRepository clientsRepository,
         IAdvisorsRepository advisorsRepository,
         IUsersRepository usersRepository,
-        ICurrentUserProvider currentUserProvider,
-        IUnitOfWork unitOfWork)
+        ICurrentUserProvider currentUserProvider)
             : IRequestHandler<ListClientsQuery, ErrorOr<List<ClientsQueryResult>>>
     {
         private readonly IClientsRepository _clientsRepository = clientsRepository;
         private readonly IUsersRepository _usersRepository = usersRepository;
         private readonly IAdvisorsRepository _advisorsRepository = advisorsRepository;
         private readonly ICurrentUserProvider _currentUserProvider = currentUserProvider;
-        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task<ErrorOr<List<ClientsQueryResult>>> Handle(ListClientsQuery query, CancellationToken cancellationToken)
         {
@@ -48,8 +46,7 @@ namespace Xp.FinancialPortfolioManager.Application.Profiles.Queries.ListClients
                 var user = await _usersRepository.GetByIdAsync(client.UserId);
                 var clientResult = new ClientsQueryResult
                 (
-                    Name: user.FirstName + " " + user.LastName,
-                    Email: user.Email,
+                    User: user,
                     ClientId: client.Id
                 );
 

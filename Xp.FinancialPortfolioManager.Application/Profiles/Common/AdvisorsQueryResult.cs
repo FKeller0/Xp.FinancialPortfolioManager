@@ -1,7 +1,8 @@
-﻿namespace Xp.FinancialPortfolioManager.Application.Profiles.Common
+﻿using Xp.FinancialPortfolioManager.Domain.Users;
+
+namespace Xp.FinancialPortfolioManager.Application.Profiles.Common
 {
     public record AdvisorsQueryResult(
-        string Name,
-        string Email,
+        User User,
         Guid AdvisorId);    
 }
