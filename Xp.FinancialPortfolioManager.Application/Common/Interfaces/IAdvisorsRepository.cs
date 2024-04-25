@@ -6,6 +6,7 @@ namespace Xp.FinancialPortfolioManager.Application.Common.Interfaces
     {
         Task AddAdvisorAsync(Advisor advisor);
         Task<Advisor?> GetByIdAsync(Guid advisorId);
+        Task<List<Advisor>> ListAdvisors();
         Task UpdateAsync(Advisor advisor);
     }
 }

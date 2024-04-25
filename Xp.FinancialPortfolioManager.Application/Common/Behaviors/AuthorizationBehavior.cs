@@ -14,7 +14,7 @@ namespace Xp.FinancialPortfolioManager.Application.Common.Behaviors
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             var authorizationAttributes = request.GetType()
-                .GetCustomAttributes<AuthorizationAttribute>()
+                .GetCustomAttributes<AuthorizeAttribute>()
                 .ToList();
 
             if (authorizationAttributes.Count == 0)
@@ -35,8 +35,15 @@ namespace Xp.FinancialPortfolioManager.Application.Common.Behaviors
                 .SelectMany(authorizationAttributes => authorizationAttributes.Roles?.Split(",") ?? [])
                 .ToList();
 
-            if (requiredRoles.Except(currentUser.Roles).Any())
-                return (dynamic)Error.Unauthorized(description: "User is forbidden from taking this action");
+            //if (requiredRoles.Except(currentUser.Roles).Any())
+            //    return (dynamic)Error.Unauthorized(description: "User is forbidden from taking this action");
+            foreach(var userRole in currentUser.Roles) 
+            {
+                if (!requiredRoles.Contains(userRole)) 
+                {
+                    return (dynamic)Error.Unauthorized(description: "User is forbidden from taking this action");
+                }                
+            }
 
             return await next();
         }

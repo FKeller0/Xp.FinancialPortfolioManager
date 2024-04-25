@@ -17,15 +17,22 @@ namespace Xp.FinancialPortfolioManager.Application.Profiles.Commands.CreateAdvis
             var user = await _usersRepository.GetByIdAsync(command.UserId);
 
             if (user is null)
-            {
-                return Error.NotFound(description: "Usuário não encontrado");
-            }
+                return Error.NotFound(description: "Usuário não encontrado");            
+
+            var advisor = await _advisorsRepository.GetByIdAsync(command.UserId);
+
+            if (advisor is not null)
+                return Error.Conflict(description: "Usuário já possui um perfil de assessor.");
 
             var createAdvisorProfileResult = user.CreateAdvisorProfile();
-            var advisor = new Advisor(userId: user.Id, id: createAdvisorProfileResult.Value);
+
+            if (createAdvisorProfileResult.IsError)
+                return Error.Conflict(description: createAdvisorProfileResult.FirstError.Description);
+
+            var createAdvisor = new Advisor(userId: user.Id, id: createAdvisorProfileResult.Value);
 
             await _usersRepository.UpdateAsync(user);
-            await _advisorsRepository.AddAdvisorAsync(advisor);
+            await _advisorsRepository.AddAdvisorAsync(createAdvisor);
             await _unitOfWork.CommitChangesAsync();
 
             return createAdvisorProfileResult;

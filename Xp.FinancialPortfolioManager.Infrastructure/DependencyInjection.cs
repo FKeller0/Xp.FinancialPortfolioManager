@@ -7,8 +7,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Xp.FinancialPortfolioManager.Application.Common.Interfaces;
 using Xp.FinancialPortfolioManager.Domain.Common.Interfaces;
+using Xp.FinancialPortfolioManager.Infrastructure.Admins;
+using Xp.FinancialPortfolioManager.Infrastructure.Advisors;
 using Xp.FinancialPortfolioManager.Infrastructure.Authentication.JwtGenerator;
 using Xp.FinancialPortfolioManager.Infrastructure.Authentication.PasswordHasher;
+using Xp.FinancialPortfolioManager.Infrastructure.Clients;
 using Xp.FinancialPortfolioManager.Infrastructure.Common.Persistence;
 using Xp.FinancialPortfolioManager.Infrastructure.Users;
 
@@ -29,6 +32,9 @@ namespace Xp.FinancialPortfolioManager.Infrastructure
                 options.UseSqlite("Data Source = XpFinancialPortfolioManagement.db"));
             
             services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IAdminsRepository, AdminsRepository>();
+            services.AddScoped<IAdvisorsRepository, AdvisorsRepository>();
+            services.AddScoped<IClientsRepository, ClientsRepository>();
             services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<FinancialPortfolioDbContext>());
 
             return services;

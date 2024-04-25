@@ -31,7 +31,7 @@ namespace Xp.FinancialPortfolioManager.Infrastructure.Users
                 firstName: "Sys",
                 lastName: "Admin",
                 email: "financialportfolio@xpfinancialportfolio.com",
-                passwordHash: "$2y$10$1VGnWkWYjOG/XvQ5njlZ.uhIDcwDh2WYifFHq0eKhQFBvR3mePLmi",
+                passwordHash: "$2a$11$fm.DCQn2.Cq7PlPfhwWDuO7pgEjGqs0pCf1P5Q24VejUqc.XxahLm",
                 adminId: Guid.Parse("2150e333-8fdc-42a3-9474-1a3956d46de8"),
                 id: Guid.Parse("1b41fae8-e02c-448b-944d-6169ebc26ddf")));
         }

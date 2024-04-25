@@ -19,6 +19,13 @@ namespace Xp.FinancialPortfolioManager.Infrastructure.Advisors
                 .FirstOrDefaultAsync(a => a.Id == adminId);
         }
 
+        public async Task<List<Advisor>> ListAdvisors() 
+        {
+            return await _dbContext.Advisors
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public Task UpdateAsync(Advisor admin)
         {
             _dbContext.Advisors.Update(admin);

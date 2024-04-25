@@ -1,8 +1,6 @@
 ﻿using ErrorOr;
 using MediatR;
 using Xp.FinancialPortfolioManager.Application.Common.Interfaces;
-using Xp.FinancialPortfolioManager.Application.Profiles.Commands.CreateAdvisorProfile;
-using Xp.FinancialPortfolioManager.Domain.Advisors;
 using Xp.FinancialPortfolioManager.Domain.Clients;
 
 namespace Xp.FinancialPortfolioManager.Application.Profiles.Commands.CreateClientProfile
@@ -27,6 +25,10 @@ namespace Xp.FinancialPortfolioManager.Application.Profiles.Commands.CreateClien
                 return Error.NotFound(description: "Assessor não encontrado");            
 
             var createClientProfileResult = user.CreateClientProfile();
+
+            if (createClientProfileResult.IsError)
+                return Error.Conflict(description: createClientProfileResult.FirstError.Description);
+
             var client = new Client(userId: user.Id, advisorId: advisor.Id, id: createClientProfileResult.Value, balance: command.Balance);
 
             await _usersRepository.UpdateAsync(user);

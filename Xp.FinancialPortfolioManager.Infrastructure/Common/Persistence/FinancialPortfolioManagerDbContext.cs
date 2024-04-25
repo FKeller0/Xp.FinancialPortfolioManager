@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Reflection.Metadata;
 using Xp.FinancialPortfolioManager.Application.Common.Interfaces;
 using Xp.FinancialPortfolioManager.Domain.Admin;
 using Xp.FinancialPortfolioManager.Domain.Advisors;

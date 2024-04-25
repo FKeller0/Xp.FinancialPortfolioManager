@@ -7,7 +7,7 @@ namespace Xp.FinancialPortfolioManager.Domain.Advisors
     public class Advisor : Entity
     {
         public Guid UserId { get; }
-        public ICollection<Client> Clients { get; } = new List<Client>();
+        public ICollection<Client> Clients { get; } = new List<Client>();        
 
         public Advisor(
             Guid userId,

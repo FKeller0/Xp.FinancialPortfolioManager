@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Xp.FinancialPortfolioManager.Domain\Xp.FinancialPortfolioManager.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Profiles\Queries\" />
-  </ItemGroup>
-
 </Project>

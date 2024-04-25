@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
+using Xp.FinancialPortfolioManager.Application.Common.Authorization;
+
 
 namespace Xp.FinancialPortfolioManager.Application.Profiles.Commands.CreateClientProfile
 {

@@ -10,7 +10,10 @@ namespace Xp.FinancialPortfolioManager.Infrastructure.Clients
         {
             builder.HasKey(x => x.Id);
 
+            builder.Property(x => x.UserId);
+
             builder.Property(x => x.AdvisorId);
+
             builder.HasOne(x => x.Advisor)
                 .WithMany(x => x.Clients)
                 .HasPrincipalKey(x => x.Id)
