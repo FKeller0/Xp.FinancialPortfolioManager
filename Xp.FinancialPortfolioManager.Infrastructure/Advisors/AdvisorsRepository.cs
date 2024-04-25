@@ -19,6 +19,13 @@ namespace Xp.FinancialPortfolioManager.Infrastructure.Advisors
                 .FirstOrDefaultAsync(a => a.Id == adminId);
         }
 
+        public async Task<Advisor?> GetByUserIdAsync(Guid userId)
+        {
+            return await _dbContext.Advisors
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.UserId == userId);
+        }
+
         public async Task<List<Advisor>> ListAdvisors() 
         {
             return await _dbContext.Advisors
