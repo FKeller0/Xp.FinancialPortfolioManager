@@ -49,7 +49,8 @@ namespace Xp.FinancialPortfolioManager.Infrastructure.Authentication.JwtGenerato
         {
             claims
                 .AddIfValueNotNull("advisorId", user.AdvisorId?.ToString())
-                .AddIfValueNotNull("clientId", user.ClientId?.ToString());            
+                .AddIfValueNotNull("clientId", user.ClientId?.ToString())
+                .AddIfValueNotNull("adminId", user.AdminId?.ToString());
         }
 
         private static void AddRoles(User user, List<Claim> claims)

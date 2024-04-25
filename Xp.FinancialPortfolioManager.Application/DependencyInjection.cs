@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Xp.FinancialPortfolioManager.Application.Common.Behaviors;
 
 
 namespace Xp.FinancialPortfolioManager.Application
@@ -11,6 +12,9 @@ namespace Xp.FinancialPortfolioManager.Application
             services.AddMediatR(options =>
             {
                 options.RegisterServicesFromAssemblyContaining(typeof(DependencyInjection));
+                
+                options.AddOpenBehavior(typeof(ValidationBehavior<,>));
+                options.AddOpenBehavior(typeof(AuthorizationBehavior<,>));
             });
 
             services.AddValidatorsFromAssemblyContaining(typeof(DependencyInjection));

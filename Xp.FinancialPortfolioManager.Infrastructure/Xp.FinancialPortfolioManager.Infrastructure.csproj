@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Xp.FinancialPortfolioManager.Application\Xp.FinancialPortfolioManager.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

@@ -11,6 +11,7 @@ namespace Xp.FinancialPortfolioManager.Domain.Users
         public string Email { get; } = null!;
         public Guid? AdvisorId { get; private set; }
         public Guid? ClientId { get; private set; }
+        public Guid? AdminId { get; private set; }
 
         private readonly string _passwordHash = null!;
 
@@ -20,7 +21,8 @@ namespace Xp.FinancialPortfolioManager.Domain.Users
             string email,
             string passwordHash,
             Guid? advisorId = null,
-            Guid? clientId = null,            
+            Guid? clientId = null,
+            Guid? adminId = null,
             Guid? id = null)
             : base(id ?? Guid.NewGuid())
         {
@@ -29,6 +31,7 @@ namespace Xp.FinancialPortfolioManager.Domain.Users
             Email = email;
             AdvisorId = advisorId;
             ClientId = clientId;
+            AdminId = adminId;
             _passwordHash = passwordHash;
         }
 
@@ -73,6 +76,11 @@ namespace Xp.FinancialPortfolioManager.Domain.Users
             if (ClientId is not null)
             {
                 profileTypes.Add(ProfileType.Client);
+            }
+
+            if (AdminId is not null) 
+            {
+                profileTypes.Add(ProfileType.Admin);
             }
 
             return profileTypes;

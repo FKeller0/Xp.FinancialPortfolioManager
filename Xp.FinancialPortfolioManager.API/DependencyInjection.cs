@@ -1,4 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
+using Xp.FinancialPortfolioManager.API.Services;
+using Xp.FinancialPortfolioManager.Application.Common.Interfaces;
 
 namespace Xp.FinancialPortfolioManager.API
 {
@@ -10,7 +12,9 @@ namespace Xp.FinancialPortfolioManager.API
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddProblemDetails();
-            services.AddHttpContextAccessor();            
+            services.AddHttpContextAccessor();
+
+            services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
 
             return services;
         }
