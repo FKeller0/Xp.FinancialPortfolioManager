@@ -6,5 +6,6 @@ namespace Xp.FinancialPortfolioManager.Domain.Users
     {
         public static readonly ProfileType Advisor = new(nameof(Advisor), 0);
         public static readonly ProfileType Client = new(nameof(Client), 1);
+        public static readonly ProfileType Admin = new(nameof(Admin), 2);
     }
 }
