@@ -9,6 +9,8 @@ using Xp.FinancialPortfolioManager.Application.Common.Interfaces;
 using Xp.FinancialPortfolioManager.Domain.Common.Interfaces;
 using Xp.FinancialPortfolioManager.Infrastructure.Authentication.JwtGenerator;
 using Xp.FinancialPortfolioManager.Infrastructure.Authentication.PasswordHasher;
+using Xp.FinancialPortfolioManager.Infrastructure.Common.Persistence;
+using Xp.FinancialPortfolioManager.Infrastructure.Users;
 
 namespace Xp.FinancialPortfolioManager.Infrastructure
 {
@@ -23,11 +25,11 @@ namespace Xp.FinancialPortfolioManager.Infrastructure
 
         public static IServiceCollection AddPersistence(this IServiceCollection services)
         {
-            services.AddDbContext<GymManagementDbContext>(options =>
+            services.AddDbContext<FinancialPortfolioDbContext>(options =>
                 options.UseSqlite("Data Source = XpFinancialPortfolioManagement.db"));
             
             services.AddScoped<IUsersRepository, UsersRepository>();
-            services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<GymManagementDbContext>());
+            services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<FinancialPortfolioDbContext>());
 
             return services;
         }
