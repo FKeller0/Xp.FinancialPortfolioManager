@@ -396,3 +396,8 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+#Sqlite Files
+/Xp.FinancialPortfolioManager.API/XpFinancialPortfolioManagement.db
+*.db-shm
+*.db-wal
