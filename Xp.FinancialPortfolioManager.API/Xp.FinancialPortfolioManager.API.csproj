@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Xp.FinancialPortfolioManager.Application\Xp.FinancialPortfolioManager.Application.csproj" />
     <ProjectReference Include="..\Xp.FinancialPortfolioManager.Contracts\Xp.FinancialPortfolioManager.Contracts.csproj" />
     <ProjectReference Include="..\Xp.FinancialPortfolioManager.Infrastructure\Xp.FinancialPortfolioManager.Infrastructure.csproj" />
