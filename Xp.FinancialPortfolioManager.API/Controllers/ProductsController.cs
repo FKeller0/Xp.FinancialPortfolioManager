@@ -11,15 +11,13 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
     [Route("[controller]")]
     public class ProductsController(ISender _mediator) : ApiController
     {
-
         [HttpPost("product")]
         [Authorize]
         public async Task<IActionResult> CreateProduct(CreateProductRequest request)
         {
             var command = new CreateProductCommand(
                 request.Name,
-                request.Description,
-                request.Value,
+                request.Description,                
                 request.ExpiresAt);
 
             var createProductResult = await _mediator.Send(command);
@@ -31,8 +29,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
                     new ProductResponse(
                             product.Id,
                             product.Name,
-                            product.Description,
-                            product.Value,
+                            product.Description,                            
                             product.ExpiresAt,
                             product.CreatedAt)),
                     Problem);
@@ -43,15 +40,14 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
         {
             var query = new GetProductQuery(productId);
 
-            var getNoteResult = await _mediator.Send(query);
+            var getProductResult = await _mediator.Send(query);
 
-            return getNoteResult.Match(
+            return getProductResult.Match(
                 product => Ok(
                     new ProductResponse(
                         product.Id,
                         product.Name,
-                        product.Description,
-                        product.Value,
+                        product.Description,                        
                         product.ExpiresAt,
                         product.CreatedAt)),
                 Problem);
@@ -69,8 +65,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
                         product => new ProductResponse(
                             product.Id,
                             product.Name,
-                            product.Description,
-                            product.Value,
+                            product.Description,                            
                             product.ExpiresAt,
                             product.CreatedAt))),
                     Problem);

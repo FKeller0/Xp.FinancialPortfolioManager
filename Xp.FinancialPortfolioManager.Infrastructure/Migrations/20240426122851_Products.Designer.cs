@@ -11,8 +11,8 @@ using Xp.FinancialPortfolioManager.Infrastructure.Common.Persistence;
 namespace Xp.FinancialPortfolioManager.Infrastructure.Migrations
 {
     [DbContext(typeof(FinancialPortfolioDbContext))]
-    [Migration("20240425214757_Products-Migration")]
-    partial class ProductsMigration
+    [Migration("20240426122851_Products")]
+    partial class Products
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,9 +90,6 @@ namespace Xp.FinancialPortfolioManager.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 

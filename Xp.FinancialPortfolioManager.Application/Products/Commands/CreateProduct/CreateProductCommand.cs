@@ -8,7 +8,6 @@ namespace Xp.FinancialPortfolioManager.Application.Products.Commands.CreateProdu
     [Authorize(Roles = "Admin,Advisor")]
     public record CreateProductCommand(
         string Name,
-        string Description,
-        double Value,
+        string Description,        
         DateTime ExpiresAt) : IRequest<ErrorOr<Product>>;
 }

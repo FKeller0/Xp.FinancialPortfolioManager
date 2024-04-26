@@ -8,9 +8,7 @@ namespace Xp.FinancialPortfolioManager.Application.Products.Commands.CreateProdu
         {
             RuleFor(p => p.Name).NotEmpty();
 
-            RuleFor(p => p.Description).NotEmpty();
-
-            RuleFor(p => p.Value).NotEmpty();            
+            RuleFor(p => p.Description).NotEmpty();                    
         }
     }
 }

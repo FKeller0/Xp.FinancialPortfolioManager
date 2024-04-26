@@ -52,6 +52,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
         }
 
         [HttpGet("clients")]
+        [Authorize]
         public async Task<IActionResult> ListClients(Guid advisorId)
         {
             var query = new ListClientsQuery(advisorId);

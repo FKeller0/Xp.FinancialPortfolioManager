@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Clients\Commands\" />
     <Folder Include="Products\Common\" />
   </ItemGroup>
 

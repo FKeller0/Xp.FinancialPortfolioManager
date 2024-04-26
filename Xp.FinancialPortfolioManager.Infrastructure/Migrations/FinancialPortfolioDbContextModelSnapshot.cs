@@ -88,9 +88,6 @@ namespace Xp.FinancialPortfolioManager.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<double>("Value")
-                        .HasColumnType("REAL");
-
                     b.HasKey("Id");
 
                     b.ToTable("Products");

@@ -19,8 +19,7 @@ namespace Xp.FinancialPortfolioManager.Application.Products.Commands.CreateProdu
 
             var product = new Product(
                 command.Name,
-                command.Description,
-                command.Value,
+                command.Description,                
                 command.ExpiresAt);
 
             await _productsRepository.AddProductAsync(product);

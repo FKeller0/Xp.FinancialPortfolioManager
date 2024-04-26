@@ -14,8 +14,7 @@ namespace Xp.FinancialPortfolioManager.Infrastructure.Products
                 .ValueGeneratedNever();
 
             builder.Property(p => p.Name);
-            builder.Property(p => p.Description);
-            builder.Property(p => p.Value);
+            builder.Property(p => p.Description);            
             builder.Property(p => p.CreatedAt);
             builder.Property(p => p.ExpiresAt);
         }

@@ -14,7 +14,7 @@ namespace Xp.FinancialPortfolioManager.Application.Products.Queries.GetProduct
         public async Task<ErrorOr<Product>> Handle(GetProductQuery query, CancellationToken cancellationToken)
         {            
             if (await _productsRepository.GetByIdAsync(query.ProductId) is not Product product)
-                return Error.NotFound(description: "Note not found");
+                return Error.NotFound(description: "Produto não encontrado");
 
             return product;
         }
