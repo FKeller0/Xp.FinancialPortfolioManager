@@ -7,15 +7,11 @@ namespace Xp.FinancialPortfolioManager.Application.Profiles.Queries.ListAdvisors
 {
     public class ListAdvisorsQueryHandler(
         IAdvisorsRepository advisorsRepository,
-        IUsersRepository usersRepository,
-        ICurrentUserProvider currentUserProvider,
-        IUnitOfWork unitOfWork)
+        IUsersRepository usersRepository)
             : IRequestHandler<ListAdvisorsQuery, ErrorOr<List<AdvisorsQueryResult>>>
     {
         private readonly IAdvisorsRepository _advisorsRepository = advisorsRepository;
         private readonly IUsersRepository _usersRepository = usersRepository;
-        private readonly ICurrentUserProvider _currentUserProvider = currentUserProvider;
-        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task<ErrorOr<List<AdvisorsQueryResult>>> Handle(ListAdvisorsQuery query, CancellationToken cancellationToken)
         {                    
@@ -30,8 +26,7 @@ namespace Xp.FinancialPortfolioManager.Application.Profiles.Queries.ListAdvisors
                 var user = await _usersRepository.GetByIdAsync(advisor.UserId);
                 var advisorResult = new AdvisorsQueryResult
                 (
-                    Name: user.FirstName + " " + user.LastName,
-                    Email: user.Email,
+                    User: user,
                     AdvisorId: advisor.Id
                 );
 

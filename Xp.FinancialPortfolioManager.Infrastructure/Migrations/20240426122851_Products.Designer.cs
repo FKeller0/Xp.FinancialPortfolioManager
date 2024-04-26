@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Xp.FinancialPortfolioManager.Infrastructure.Common.Persistence;
 
@@ -10,9 +11,11 @@ using Xp.FinancialPortfolioManager.Infrastructure.Common.Persistence;
 namespace Xp.FinancialPortfolioManager.Infrastructure.Migrations
 {
     [DbContext(typeof(FinancialPortfolioDbContext))]
-    partial class FinancialPortfolioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240426122851_Products")]
+    partial class Products
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");

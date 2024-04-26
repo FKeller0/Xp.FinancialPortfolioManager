@@ -8,8 +8,7 @@ namespace Xp.FinancialPortfolioManager.Application.Profiles.Commands.CreateAdvis
     public class CreateAdvisorProfileCommandHandler(
         IUsersRepository _usersRepository,
         IAdvisorsRepository _advisorsRepository,
-        IUnitOfWork _unitOfWork,
-        ICurrentUserProvider _currentUserProvider)
+        IUnitOfWork _unitOfWork)
             : IRequestHandler<CreateAdvisorProfileCommand, ErrorOr<Guid>>
     {
         public async Task<ErrorOr<Guid>> Handle(CreateAdvisorProfileCommand command, CancellationToken cancellationToken)

@@ -17,4 +17,9 @@
     <ProjectReference Include="..\Xp.FinancialPortfolioManager.Domain\Xp.FinancialPortfolioManager.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Clients\Commands\" />
+    <Folder Include="Products\Common\" />
+  </ItemGroup>
+
 </Project>

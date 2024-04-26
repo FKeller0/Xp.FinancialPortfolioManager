@@ -23,7 +23,7 @@ namespace Xp.FinancialPortfolioManager.API
         {
             services.AddSwaggerGen(option =>
             {
-                option.SwaggerDoc("v1", new OpenApiInfo { Title = "Caderninh.IO", Version = "v1" });
+                option.SwaggerDoc("v1", new OpenApiInfo { Title = "Xp.FinancialPortfolioManager", Version = "v1" });
                 option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,

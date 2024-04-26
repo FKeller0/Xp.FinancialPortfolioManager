@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Xp.FinancialPortfolioManager.Application.Profiles.Commands.CreateAdvisorProfile;
 using Xp.FinancialPortfolioManager.Application.Profiles.Commands.CreateClientProfile;
+using Xp.FinancialPortfolioManager.Application.Profiles.Common;
 using Xp.FinancialPortfolioManager.Application.Profiles.Queries.ListAdvisors;
 using Xp.FinancialPortfolioManager.Application.Profiles.Queries.ListClients;
 using Xp.FinancialPortfolioManager.Contracts.Profiles;
@@ -43,14 +44,15 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
         {
             var query = new ListAdvisorsQuery();
 
-            var listAdvisorsResult = await _mediator.Send(query);
+            var listAdvisorsResult = await _mediator.Send(query);            
 
             return listAdvisorsResult.Match(
-                Ok,
+                advisorsResult => base.Ok(MapToAdvisorsResponse(advisorsResult)),
                 Problem);
         }
 
         [HttpGet("clients")]
+        [Authorize]
         public async Task<IActionResult> ListClients(Guid advisorId)
         {
             var query = new ListClientsQuery(advisorId);
@@ -58,8 +60,36 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
             var listClientsResult = await _mediator.Send(query);
 
             return listClientsResult.Match(
-                Ok,
+                clientsResult => base.Ok(MapToClientsResponse(clientsResult)),
                 Problem);
-        }        
+        }
+
+        private static List<AdvisorsQueryResponse> MapToAdvisorsResponse(List<AdvisorsQueryResult> authResult)
+        {
+            var list = new List<AdvisorsQueryResponse>();
+            foreach(var auth in authResult) 
+            {
+                list.Add(new AdvisorsQueryResponse(
+                    auth.AdvisorId,
+                    auth.User.FirstName,
+                    auth.User.LastName,
+                    auth.User.Email));
+            }
+            return list;
+        }
+
+        private static List<ClientsQueryResponse> MapToClientsResponse(List<ClientsQueryResult> authResult)
+        {
+            var list = new List<ClientsQueryResponse>();
+            foreach (var auth in authResult)
+            {
+                list.Add(new ClientsQueryResponse(
+                    auth.ClientId,
+                    auth.User.FirstName,
+                    auth.User.LastName,
+                    auth.User.Email));
+            }
+            return list;
+        }
     }
 }
