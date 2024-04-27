@@ -25,5 +25,14 @@ Clientes podem consultar suas próprias ações e Assessores podem consultar as 
 
 Produtos podem ser registrados por um Admin ou Assessor.
 
-O Serviço de Email é disparado todos os dias as 09:00, enviando através de SMTP emails para todos os assessores cadastrados sobre os produtos que expiram naquele mesmo dia.
+O Serviço de Email foi configurado para disparar todos os dias as 09:00, enviando através de SMTP emails para todos os assessores cadastrados sobre os produtos que expiram naquele mesmo dia.
 As configurações de SMTP podem ser acessadas no arquivo appsettings.json no projeto Xp.FinancialPortfolioManager.API
+A configuração de periodicidade pode ser alterada no arquivo Program.cs, a biblioteca utilizada para o Scheduler é bem flexível.
+
+Libs utilizadas:
+- MediatR => padrão de mediador utilizado com padrão CQRS para envios de comandos e queries, também permite adição de Behaviors para Pipelines;
+- Coravel => Simplicidade na gestão de Scheduler;
+- ErrorOr => Permite simplificar retornos de maneira elegante atribuindo um Erro ou Resultado ao retorno;
+- MailKit => Biblioteca de envio de emails;
+- FluentValidations => Facilita a validação de dados recebidos de maneira fluente;
+- BCrypt => criptografia de senhas;
