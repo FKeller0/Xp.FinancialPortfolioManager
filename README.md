@@ -20,7 +20,9 @@ Um Usuário padrão da aplicação foi configurado para controle de acesso e cri
   - senha: Root12345!
 
 Ações de Perfil são todas feitas através dos endpoints de "Profiles"
+
 Os usuários registrados podem adquirir um perfil de Assessor ou Cliente, sendo que somente o Admin pode registar um perfil de Assessor e Assessores e Admins podem registrar um perfil de Cliente.
+
 Clientes podem consultar suas próprias ações e Assessores podem consultar as ações de todos seus clientes.
 
 Produtos podem ser registrados por um Admin ou Assessor.
