@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using Xp.FinancialPortfolioManager.Application.Clients.Commands.AddBalanceCommand;
 using Xp.FinancialPortfolioManager.Application.Clients.Commands.WithdrawBalanceCommand;
 using Xp.FinancialPortfolioManager.Application.Clients.Common;
@@ -20,6 +21,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
     {
         [Authorize]
         [HttpGet("{clientId:guid}")]
+        [SwaggerOperation(Summary = "Permite que um Assessor ou Cliente logado consulte informações de um cliente")]
         public async Task<IActionResult> GetClient(Guid clientId) 
         {
             var query = new GetClientQuery(clientId);
@@ -33,6 +35,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
 
         [Authorize]
         [HttpGet("getClientHistory")]
+        [SwaggerOperation(Summary = "Permite que um Assessor ou Cliente logado consulte informações de histórico de transações de um cliente")]
         public async Task<IActionResult> GetClientHistory(Guid clientId)
         {
             var query = new GetClientHistoryQuery(clientId);
@@ -45,6 +48,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
 
         [Authorize]
         [HttpGet("getClientPortfolio")]
+        [SwaggerOperation(Summary = "Permite que um Assessor ou Cliente logado consulte informações do portfólio de produtos de um cliente")]
         public async Task<IActionResult> GetClientPortfolio(Guid clientId)
         {
             var query = new GetClientPortfolioQuery(clientId);
@@ -57,6 +61,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
 
         [Authorize]
         [HttpPost("addBalance")]
+        [SwaggerOperation(Summary = "Permite que um Assessor ou Cliente logado adicione saldo a sua conta")]
         public async Task<IActionResult> AddBalance(BalanceRequest request) 
         {
             var command = new AddBalanceCommand(request.ClientId, request.Balance);
@@ -69,6 +74,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
 
         [Authorize]
         [HttpPost("withdrawBalance")]
+        [SwaggerOperation(Summary = "Permite que um Assessor ou Cliente logado saque um valor de sua conta")]
         public async Task<IActionResult> WithdrawBalance(BalanceRequest request)
         {
             var command = new WithdrawBalanceCommand(request.ClientId, request.Balance);

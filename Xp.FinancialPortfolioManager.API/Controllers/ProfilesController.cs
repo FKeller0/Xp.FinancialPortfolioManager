@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using Xp.FinancialPortfolioManager.Application.Profiles.Commands.CreateAdvisorProfile;
 using Xp.FinancialPortfolioManager.Application.Profiles.Commands.CreateClientProfile;
 using Xp.FinancialPortfolioManager.Application.Profiles.Common;
@@ -13,6 +14,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
     [Route("[controller]")]
     public class ProfilesController(ISender _mediator) : ApiController
     {
+        [SwaggerOperation(Summary = "Permite listar todos os Assessores disponíveis")]        
         [HttpGet("advisors")]
         public async Task<IActionResult> ListAdvisors()
         {
@@ -27,6 +29,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
 
         [HttpGet("clients")]
         [Authorize]
+        [SwaggerOperation(Summary = "Permite que um Assessor logado liste todos seus clientes")]
         public async Task<IActionResult> ListClients(Guid advisorId)
         {
             var query = new ListClientsQuery(advisorId);
@@ -40,6 +43,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
 
         [HttpPost("advisor")]
         [Authorize]
+        [SwaggerOperation(Summary = "Permite que um Admin logado adicione um perfil de Assessor a um usuário")]
         public async Task<IActionResult> CreateAdvisorProfile(Guid userId)
         {
             var command = new CreateAdvisorProfileCommand(userId);
@@ -53,6 +57,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
 
         [HttpPost("client")]
         [Authorize]
+        [SwaggerOperation(Summary = "Permite que um Admin ou Assessor logado adicione um perfil de Cliente a um usuário")]
         public async Task<IActionResult> CreateClientProfile(Guid userId, Guid advisorId, double? balance)
         {
             var command = new CreateClientProfileCommand(userId, advisorId, balance);
