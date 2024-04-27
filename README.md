@@ -36,3 +36,4 @@ Libs utilizadas:
 - MailKit => Biblioteca de envio de emails;
 - FluentValidations => Facilita a validação de dados recebidos de maneira fluente;
 - BCrypt => criptografia de senhas;
+- EFCore => Facilidade na gestão de acesso ao banco de Dados, permitindo também modularidade na implementação do Banco(Neste caso o banco utilizado foi o SQLITE);
