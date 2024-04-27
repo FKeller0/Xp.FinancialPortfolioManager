@@ -13,6 +13,31 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
     [Route("[controller]")]
     public class ProfilesController(ISender _mediator) : ApiController
     {
+        [HttpGet("advisors")]
+        public async Task<IActionResult> ListAdvisors()
+        {
+            var query = new ListAdvisorsQuery();
+
+            var listAdvisorsResult = await _mediator.Send(query);
+
+            return listAdvisorsResult.Match(
+                advisorsResult => base.Ok(MapToAdvisorsResponse(advisorsResult)),
+                Problem);
+        }
+
+        [HttpGet("clients")]
+        [Authorize]
+        public async Task<IActionResult> ListClients(Guid advisorId)
+        {
+            var query = new ListClientsQuery(advisorId);
+
+            var listClientsResult = await _mediator.Send(query);
+
+            return listClientsResult.Match(
+                clientsResult => base.Ok(MapToClientsResponse(clientsResult)),
+                Problem);
+        }
+
         [HttpPost("advisor")]
         [Authorize]
         public async Task<IActionResult> CreateAdvisorProfile(Guid userId)
@@ -37,32 +62,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
             return createProfileResult.Match(
                 id => Ok(new ProfileResponse(id)),
                 Problem);
-        }
-
-        [HttpGet("advisors")]
-        public async Task<IActionResult> ListAdvisors()
-        {
-            var query = new ListAdvisorsQuery();
-
-            var listAdvisorsResult = await _mediator.Send(query);            
-
-            return listAdvisorsResult.Match(
-                advisorsResult => base.Ok(MapToAdvisorsResponse(advisorsResult)),
-                Problem);
-        }
-
-        [HttpGet("clients")]
-        [Authorize]
-        public async Task<IActionResult> ListClients(Guid advisorId)
-        {
-            var query = new ListClientsQuery(advisorId);
-
-            var listClientsResult = await _mediator.Send(query);
-
-            return listClientsResult.Match(
-                clientsResult => base.Ok(MapToClientsResponse(clientsResult)),
-                Problem);
-        }
+        }       
 
         private static List<AdvisorsQueryResponse> MapToAdvisorsResponse(List<AdvisorsQueryResult> authResult)
         {

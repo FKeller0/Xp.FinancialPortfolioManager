@@ -6,13 +6,10 @@ using Xp.FinancialPortfolioManager.Application.Profiles.Common;
 namespace Xp.FinancialPortfolioManager.Application.Profiles.Queries.ListAdvisors
 {
     public class ListAdvisorsQueryHandler(
-        IAdvisorsRepository advisorsRepository,
-        IUsersRepository usersRepository)
+        IAdvisorsRepository _advisorsRepository,
+        IUsersRepository _usersRepository)
             : IRequestHandler<ListAdvisorsQuery, ErrorOr<List<AdvisorsQueryResult>>>
-    {
-        private readonly IAdvisorsRepository _advisorsRepository = advisorsRepository;
-        private readonly IUsersRepository _usersRepository = usersRepository;
-
+    {        
         public async Task<ErrorOr<List<AdvisorsQueryResult>>> Handle(ListAdvisorsQuery query, CancellationToken cancellationToken)
         {                    
             var advisorsList = new List<AdvisorsQueryResult>();

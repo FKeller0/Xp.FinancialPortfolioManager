@@ -6,17 +6,12 @@ using Xp.FinancialPortfolioManager.Application.Profiles.Common;
 namespace Xp.FinancialPortfolioManager.Application.Profiles.Queries.ListClients
 {
     public class ListClientsQueryHandler(
-        IClientsRepository clientsRepository,
-        IAdvisorsRepository advisorsRepository,
-        IUsersRepository usersRepository,
-        ICurrentUserProvider currentUserProvider)
+        IClientsRepository _clientsRepository,
+        IAdvisorsRepository _advisorsRepository,
+        IUsersRepository _usersRepository,
+        ICurrentUserProvider _currentUserProvider)
             : IRequestHandler<ListClientsQuery, ErrorOr<List<ClientsQueryResult>>>
-    {
-        private readonly IClientsRepository _clientsRepository = clientsRepository;
-        private readonly IUsersRepository _usersRepository = usersRepository;
-        private readonly IAdvisorsRepository _advisorsRepository = advisorsRepository;
-        private readonly ICurrentUserProvider _currentUserProvider = currentUserProvider;
-
+    {        
         public async Task<ErrorOr<List<ClientsQueryResult>>> Handle(ListClientsQuery query, CancellationToken cancellationToken)
         {
             var currentUser = _currentUserProvider.GetCurrentUser();

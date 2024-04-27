@@ -8,7 +8,12 @@ namespace Xp.FinancialPortfolioManager.Application.Products.Commands.CreateProdu
         {
             RuleFor(p => p.Name).NotEmpty();
 
-            RuleFor(p => p.Description).NotEmpty();                    
+            RuleFor(p => p.Description).NotEmpty();
+
+            RuleFor(p => p.ExpiresAt).NotEmpty();
+            
+            RuleFor(x => x).Must(x => x.ExpiresAt == default || x.ExpiresAt >= DateTime.Now.Date)
+                .WithMessage("A data de expiração do produto não pode ser inferior a data atual");
         }
     }
 }

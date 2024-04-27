@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Xp.FinancialPortfolioManager.Infrastructure.Common.Persistence;
 
@@ -10,9 +11,11 @@ using Xp.FinancialPortfolioManager.Infrastructure.Common.Persistence;
 namespace Xp.FinancialPortfolioManager.Infrastructure.Migrations
 {
     [DbContext(typeof(FinancialPortfolioDbContext))]
-    partial class FinancialPortfolioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240426185306_ClientPortfolio")]
+    partial class ClientPortfolio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
@@ -101,39 +104,6 @@ namespace Xp.FinancialPortfolioManager.Infrastructure.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("Xp.FinancialPortfolioManager.Domain.ClientsHistory.ClientHistory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("REAL");
-
-                    b.Property<DateTime>("TradeDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ClientsHistory");
-                });
-
             modelBuilder.Entity("Xp.FinancialPortfolioManager.Domain.Products.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -156,36 +126,6 @@ namespace Xp.FinancialPortfolioManager.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Xp.FinancialPortfolioManager.Domain.ProductsHistory.ProductHistory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("TradeDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductsHistory");
                 });
 
             modelBuilder.Entity("Xp.FinancialPortfolioManager.Domain.Users.User", b =>

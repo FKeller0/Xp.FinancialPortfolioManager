@@ -11,9 +11,12 @@ using Xp.FinancialPortfolioManager.Infrastructure.Admins;
 using Xp.FinancialPortfolioManager.Infrastructure.Advisors;
 using Xp.FinancialPortfolioManager.Infrastructure.Authentication.JwtGenerator;
 using Xp.FinancialPortfolioManager.Infrastructure.Authentication.PasswordHasher;
+using Xp.FinancialPortfolioManager.Infrastructure.ClientPortfolios;
 using Xp.FinancialPortfolioManager.Infrastructure.Clients;
+using Xp.FinancialPortfolioManager.Infrastructure.ClientsHistory;
 using Xp.FinancialPortfolioManager.Infrastructure.Common.Persistence;
 using Xp.FinancialPortfolioManager.Infrastructure.Products;
+using Xp.FinancialPortfolioManager.Infrastructure.ProductsHistory;
 using Xp.FinancialPortfolioManager.Infrastructure.Users;
 
 namespace Xp.FinancialPortfolioManager.Infrastructure
@@ -37,6 +40,9 @@ namespace Xp.FinancialPortfolioManager.Infrastructure
             services.AddScoped<IAdvisorsRepository, AdvisorsRepository>();
             services.AddScoped<IClientsRepository, ClientsRepository>();
             services.AddScoped<IProductsRepository, ProductsRepository>();
+            services.AddScoped<IClientPorfolioRepository, ClientPortfolioRepository>();
+            services.AddScoped<IClientsHistoryRepository, ClientHistoryRepository>();
+            services.AddScoped<IProductHistoryRepository, ProductHistoryRepository>();
             services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<FinancialPortfolioDbContext>());
 
             return services;

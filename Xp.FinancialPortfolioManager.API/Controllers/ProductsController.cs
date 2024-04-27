@@ -4,37 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 using Xp.FinancialPortfolioManager.Application.Products.Commands.CreateProduct;
 using Xp.FinancialPortfolioManager.Application.Products.Queries.GetProduct;
 using Xp.FinancialPortfolioManager.Application.Products.Queries.ListProducts;
+using Xp.FinancialPortfolioManager.Application.Trading.Queries.GetProductHistory;
+using Xp.FinancialPortfolioManager.Contracts.Clients;
 using Xp.FinancialPortfolioManager.Contracts.Products;
+using Xp.FinancialPortfolioManager.Domain.ProductsHistory;
 
 namespace Xp.FinancialPortfolioManager.API.Controllers
 {
     [Route("[controller]")]
     public class ProductsController(ISender _mediator) : ApiController
     {
-        [HttpPost("product")]
-        [Authorize]
-        public async Task<IActionResult> CreateProduct(CreateProductRequest request)
-        {
-            var command = new CreateProductCommand(
-                request.Name,
-                request.Description,                
-                request.ExpiresAt);
-
-            var createProductResult = await _mediator.Send(command);
-
-            return createProductResult.Match(
-                product => CreatedAtAction(
-                    nameof(GetProduct),
-                    new { ProductId = product.Id },
-                    new ProductResponse(
-                            product.Id,
-                            product.Name,
-                            product.Description,                            
-                            product.ExpiresAt,
-                            product.CreatedAt)),
-                    Problem);
-        }
-
         [HttpGet("{productId:guid}")]
         public async Task<IActionResult> GetProduct(Guid productId)
         {
@@ -69,6 +48,57 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
                             product.ExpiresAt,
                             product.CreatedAt))),
                     Problem);
+        }
+        
+        [HttpGet("getProductHistory")]
+        public async Task<IActionResult> GetProductHistory(Guid productId)
+        {
+            var query = new GetProductHistoryQuery(productId);
+
+            var getClientHistoryResult = await _mediator.Send(query);
+
+            return getClientHistoryResult.Match(
+                clientHistoryResult => base.Ok(MapToProductHistoryResponse(clientHistoryResult)), Problem);
+        }
+
+        [HttpPost("product")]
+        [Authorize]
+        public async Task<IActionResult> CreateProduct(CreateProductRequest request)
+        {
+            var command = new CreateProductCommand(
+                request.Name,
+                request.Description,                
+                request.ExpiresAt);
+
+            var createProductResult = await _mediator.Send(command);
+
+            return createProductResult.Match(
+                product => CreatedAtAction(
+                    nameof(GetProduct),
+                    new { ProductId = product.Id },
+                    new ProductResponse(
+                            product.Id,
+                            product.Name,
+                            product.Description,                            
+                            product.ExpiresAt,
+                            product.CreatedAt)),
+                    Problem);
+        }
+
+        private static List<ProductHistoryResponse> MapToProductHistoryResponse(List<ProductHistory> histResult)
+        {
+            var list = new List<ProductHistoryResponse>();
+            foreach (var hist in histResult)
+            {
+                list.Add(new ProductHistoryResponse(
+                    hist.Id,
+                    hist.ProductName,
+                    hist.Type,
+                    hist.Quantity,
+                    hist.Value,
+                    hist.TradeDate));
+            }
+            return list;
         }
     }
 }

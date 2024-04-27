@@ -2,40 +2,25 @@
 using MediatR;
 using Xp.FinancialPortfolioManager.Application.Clients.Common;
 using Xp.FinancialPortfolioManager.Application.Common.Interfaces;
-using Xp.FinancialPortfolioManager.Domain.Advisors;
 using Xp.FinancialPortfolioManager.Domain.Clients;
 
 namespace Xp.FinancialPortfolioManager.Application.Clients.Queries.GetClient
 {
     public class GetClientQueryHandler(
-        IClientsRepository clientsRepository,
-        IUsersRepository usersRepository,
-        ICurrentUserProvider currentUserProvider,
-        IAdvisorsRepository advisorsRepository)
+        IClientsRepository _clientsRepository,
+        IUsersRepository _usersRepository,
+        IIsValidUser _isValidUser)
             : IRequestHandler<GetClientQuery, ErrorOr<ClientQueryResult>>
-    {
-        private readonly IClientsRepository _clientsRepository = clientsRepository;
-        private readonly IUsersRepository _usersRepository = usersRepository;
-        private readonly ICurrentUserProvider _currentUserProvider = currentUserProvider;
-        private readonly IAdvisorsRepository _advisorsRepository = advisorsRepository;
-
+    {        
         public async Task<ErrorOr<ClientQueryResult>> Handle(GetClientQuery query, CancellationToken cancellationToken)
         {
-            var currentUser = _currentUserProvider.GetCurrentUser();            
+            var isValidUser = await _isValidUser.ValidateUserAsync(query.ClientId);
+
+            if (isValidUser.IsError)
+                return isValidUser.FirstError;
 
             if (await _clientsRepository.GetByIdAsync(query.ClientId) is not Client client)
-                return Error.NotFound(description: "Cliente não encontrado");
-
-            if (currentUser.Id != client.UserId) 
-            {
-                if (await _advisorsRepository.GetByUserIdAsync(currentUser.Id) is Advisor advisor) 
-                {
-                    if (client.AdvisorId != advisor.Id) 
-                    {
-                        return Error.Conflict(description: "O usuário não pode efetuar esta ação");
-                    }
-                }
-            }
+                return Error.NotFound(description: "Cliente não encontrado");            
 
             var user = await _usersRepository.GetByIdAsync(client.UserId);
             var clientResult = new ClientQueryResult
