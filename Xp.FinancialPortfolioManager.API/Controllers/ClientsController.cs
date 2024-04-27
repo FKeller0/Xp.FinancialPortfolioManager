@@ -1,14 +1,24 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Xp.FinancialPortfolioManager.Application.Clients.Commands.AddBalanceCommand;
+using Xp.FinancialPortfolioManager.Application.Clients.Commands.WithdrawBalanceCommand;
 using Xp.FinancialPortfolioManager.Application.Clients.Common;
 using Xp.FinancialPortfolioManager.Application.Clients.Queries.GetClient;
+using Xp.FinancialPortfolioManager.Application.Profiles.Common;
+using Xp.FinancialPortfolioManager.Application.Trading.Common;
+using Xp.FinancialPortfolioManager.Application.Trading.Queries.GetClientHistory;
+using Xp.FinancialPortfolioManager.Application.Trading.Queries.GetClientPortfolio;
 using Xp.FinancialPortfolioManager.Contracts.Clients;
+using Xp.FinancialPortfolioManager.Contracts.Profiles;
+using Xp.FinancialPortfolioManager.Domain.ClientsHistory;
 
 namespace Xp.FinancialPortfolioManager.API.Controllers
 {
     [Route("[controller]")]
     public class ClientsController(ISender _mediator) : ApiController
     {
+        [Authorize]
         [HttpGet("{clientId:guid}")]
         public async Task<IActionResult> GetClient(Guid clientId) 
         {
@@ -21,23 +31,53 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
                 Problem);
         }
 
-        //[HttpGet("{productId:guid}")]
-        //public async Task<IActionResult> GetProduct(Guid productId)
-        //{
-        //    var query = new GetProductQuery(productId);
+        [Authorize]
+        [HttpGet("getClientHistory")]
+        public async Task<IActionResult> GetClientHistory(Guid clientId)
+        {
+            var query = new GetClientHistoryQuery(clientId);
 
-        //    var getNoteResult = await _mediator.Send(query);
+            var getClientHistoryResult = await _mediator.Send(query);
 
-        //    return getNoteResult.Match(
-        //        product => Ok(
-        //            new ProductResponse(
-        //                product.Id,
-        //                product.Name,
-        //                product.Description,
-        //                product.ExpiresAt,
-        //                product.CreatedAt)),
-        //        Problem);
-        //}
+            return getClientHistoryResult.Match(
+                clientHistoryResult => base.Ok(MapToClientHistoryResponse(clientHistoryResult)), Problem);
+        }
+
+        [Authorize]
+        [HttpGet("getClientPortfolio")]
+        public async Task<IActionResult> GetClientPortfolio(Guid clientId)
+        {
+            var query = new GetClientPortfolioQuery(clientId);
+
+            var getClientPortfolioResult = await _mediator.Send(query);
+
+            return getClientPortfolioResult.Match(
+                clientPortfolioResult => base.Ok(MapToClientPortfolioResponse(clientPortfolioResult)), Problem);
+        }
+
+        [Authorize]
+        [HttpPost("addBalance")]
+        public async Task<IActionResult> AddBalance(BalanceRequest request) 
+        {
+            var command = new AddBalanceCommand(request.ClientId, request.Balance);
+
+            var getAddBalanceResult = await _mediator.Send(command);
+
+            return getAddBalanceResult.Match(
+                addBalanceResult => base.Ok(addBalanceResult), Problem);
+        }
+
+        [Authorize]
+        [HttpPost("withdrawBalance")]
+        public async Task<IActionResult> WithdrawBalance(BalanceRequest request)
+        {
+            var command = new WithdrawBalanceCommand(request.ClientId, request.Balance);
+
+            var getAddBalanceResult = await _mediator.Send(command);
+
+            return getAddBalanceResult.Match(
+                addBalanceResult => base.Ok(addBalanceResult), Problem);
+        }        
 
         private static ClientResponse MapToClientResponse(ClientQueryResult clientResult)
         {
@@ -47,6 +87,38 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
                 clientResult.User.LastName,
                 clientResult.User.Email,
                 clientResult.Balance);
+        }
+
+        private static List<ClientHistoryResponse> MapToClientHistoryResponse(List<ClientHistory> histResult)
+        {
+            var list = new List<ClientHistoryResponse>();
+            foreach (var hist in histResult)
+            {
+                list.Add(new ClientHistoryResponse(
+                    hist.Id,
+                    hist.ProductName,
+                    hist.Type,
+                    hist.Quantity,
+                    hist.Value,
+                    hist.TradeDate));
+            }
+            return list;
+        }
+
+        private static List<ClientPortfolioResponse> MapToClientPortfolioResponse(List<ClientPortfolioQueryResult> histResult)
+        {
+            var list = new List<ClientPortfolioResponse>();
+            foreach (var hist in histResult)
+            {
+                list.Add(new ClientPortfolioResponse(
+                    hist.PortfolioId,
+                    hist.ProductId,
+                    hist.ProductName,
+                    hist.Quantity,
+                    hist.BoughtFor,
+                    hist.BoughtDate));
+            }
+            return list;
         }
     }
 }

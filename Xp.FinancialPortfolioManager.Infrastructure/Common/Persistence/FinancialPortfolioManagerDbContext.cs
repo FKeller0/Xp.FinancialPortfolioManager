@@ -4,8 +4,11 @@ using System.Reflection.Metadata;
 using Xp.FinancialPortfolioManager.Application.Common.Interfaces;
 using Xp.FinancialPortfolioManager.Domain.Admin;
 using Xp.FinancialPortfolioManager.Domain.Advisors;
+using Xp.FinancialPortfolioManager.Domain.ClientPortfolios;
 using Xp.FinancialPortfolioManager.Domain.Clients;
+using Xp.FinancialPortfolioManager.Domain.ClientsHistory;
 using Xp.FinancialPortfolioManager.Domain.Products;
+using Xp.FinancialPortfolioManager.Domain.ProductsHistory;
 using Xp.FinancialPortfolioManager.Domain.Users;
 
 namespace Xp.FinancialPortfolioManager.Infrastructure.Common.Persistence
@@ -17,6 +20,9 @@ namespace Xp.FinancialPortfolioManager.Infrastructure.Common.Persistence
         public DbSet<Advisor> Advisors { get; set; } = null!;
         public DbSet<Client> Clients { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<ClientPortfolio> ClientPortfolio { get; set; } = null!;
+        public DbSet<ClientHistory> ClientsHistory { get; set; } = null!;
+        public DbSet<ProductHistory> ProductsHistory { get; set; } = null!;
 
         public FinancialPortfolioDbContext(DbContextOptions options) : base(options) { }
 

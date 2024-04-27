@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Xp.FinancialPortfolioManager.Application.Common.Behaviors;
+using Xp.FinancialPortfolioManager.Application.Common.Interfaces;
+using Xp.FinancialPortfolioManager.Application.Common.Services;
 
 
 namespace Xp.FinancialPortfolioManager.Application
@@ -16,6 +18,8 @@ namespace Xp.FinancialPortfolioManager.Application
                 options.AddOpenBehavior(typeof(ValidationBehavior<,>));
                 options.AddOpenBehavior(typeof(AuthorizationBehavior<,>));
             });
+
+            services.AddScoped<IIsValidUser, IsValidUser>();
 
             services.AddValidatorsFromAssemblyContaining(typeof(DependencyInjection));
 
