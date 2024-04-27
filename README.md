@@ -7,8 +7,8 @@ Passos para executar:
 - Clonar o repositório
 - VSCode:
   - No diretório de API, executar o comando "dotnet ef database update" para gerar o banco de dados SQLITE
-  - dotnet run
--VisualStudio:
+  - dotnet run    
+- VisualStudio:
   - Update-Database com o projeto de Infraestrutura selecionado para gerar o banco de dados SQLITE
   - Executar(F5)
 
@@ -16,8 +16,8 @@ A Aplicação oferece suporte ao Swagger e seus métodos possuem descrição.
 
 Um Usuário padrão da aplicação foi configurado para controler de acesso e criação de perfil de assessores
   
-  -user: "financialportfolio@xpfinancialportfolio.com"
-  -senha: Root12345!
+  - user: "financialportfolio@xpfinancialportfolio.com"
+  - senha: Root12345!
 
 Ações de Perfil são todas feitas através dos endpoints de "Profiles"
 Os usuários registrados podem adquirir um perfil de Assessor ou Cliente, sendo que somente o Admin pode registar um perfil de Assessor e Assessores e Admins podem registrar um perfil de Cliente.
