@@ -47,7 +47,7 @@ namespace Xp.FinancialPortfolioManager.API.Services
             {
                 var user = await _usersRepository.GetByIdAsync(advisor.UserId);
                 client.Send("financialportfoliomanager@email.com", user.Email, "Produtos Expirantes", email.Body.ToString());
-                Task.Delay(10000);
+                await Task.Delay(10000);
             }
         }
     }

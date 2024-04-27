@@ -16,7 +16,7 @@ var app = builder.Build();
 
 app.Services.UseScheduler(scheduler =>
 {
-    scheduler.Schedule<ExpiryJobInvocable>().EveryMinute().PreventOverlapping(nameof(ExpiryJobInvocable));
+    scheduler.Schedule<ExpiryJobInvocable>().DailyAtHour(9).PreventOverlapping(nameof(ExpiryJobInvocable));
 });
 
 if (app.Environment.IsDevelopment())
