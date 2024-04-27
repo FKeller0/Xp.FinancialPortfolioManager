@@ -14,7 +14,7 @@ Passos para executar:
 
 A Aplicação oferece suporte ao Swagger e seus métodos possuem uma breve descrição.
 
-Um Usuário padrão da aplicação foi configurado para controler de acesso e criação de perfil de assessores
+Um Usuário padrão da aplicação foi configurado para controle de acesso e criação de perfil de assessores
   
   - user: "financialportfolio@xpfinancialportfolio.com"
   - senha: Root12345!
