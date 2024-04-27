@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using Xp.FinancialPortfolioManager.Application.Trading.Commands.BuyProduct;
 using Xp.FinancialPortfolioManager.Application.Trading.Commands.SellProduct;
-using Xp.FinancialPortfolioManager.Application.Trading.Queries.GetClientHistory;
 using Xp.FinancialPortfolioManager.Contracts.Trading;
 
 namespace Xp.FinancialPortfolioManager.API.Controllers
@@ -13,6 +13,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
     {
         [Authorize]
         [HttpPost("buyProduct")]
+        [SwaggerOperation(Summary = "Permite que um Assessor ou Cliente logado comprem um produto")]
         public async Task<IActionResult> BuyProduct(BuyProductRequest request) 
         {
             var command = new BuyProductCommand(
@@ -29,6 +30,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
 
         [Authorize]
         [HttpPost("sellProduct")]
+        [SwaggerOperation(Summary = "Permite que um Assessor ou Cliente logado vendam um produto do portfólio do cliente")]
         public async Task<IActionResult> SellProduct(SellProductRequest request)
         {
             var command = new SellProductCommand(

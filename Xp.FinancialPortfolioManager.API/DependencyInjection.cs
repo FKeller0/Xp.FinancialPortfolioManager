@@ -30,6 +30,8 @@ namespace Xp.FinancialPortfolioManager.API
             services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "Xp.FinancialPortfolioManager", Version = "v1" });
+                option.EnableAnnotations();
+
                 option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -52,7 +54,7 @@ namespace Xp.FinancialPortfolioManager.API
                         },
                         new string[]{}
                     }
-                });
+                });                
             });
 
             return services;

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using Xp.FinancialPortfolioManager.Application.Products.Commands.CreateProduct;
 using Xp.FinancialPortfolioManager.Application.Products.Queries.GetProduct;
 using Xp.FinancialPortfolioManager.Application.Products.Queries.ListProducts;
@@ -15,6 +16,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
     public class ProductsController(ISender _mediator) : ApiController
     {
         [HttpGet("{productId:guid}")]
+        [SwaggerOperation(Summary = "Permite obter informaçõesd de um produto específico")]
         public async Task<IActionResult> GetProduct(Guid productId)
         {
             var query = new GetProductQuery(productId);
@@ -33,7 +35,8 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListNotes()
+        [SwaggerOperation(Summary = "Permite listar todos os produtos disponíveis")]
+        public async Task<IActionResult> ListProducts()
         {
             var query = new ListProductsQuery();
 
@@ -51,6 +54,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
         }
         
         [HttpGet("getProductHistory")]
+        [SwaggerOperation(Summary = "Permite obter histórico de transações de um produto específico")]
         public async Task<IActionResult> GetProductHistory(Guid productId)
         {
             var query = new GetProductHistoryQuery(productId);
@@ -63,6 +67,7 @@ namespace Xp.FinancialPortfolioManager.API.Controllers
 
         [HttpPost("product")]
         [Authorize]
+        [SwaggerOperation(Summary = "Permite que um Admin ou Assessor criem um novo produto")]
         public async Task<IActionResult> CreateProduct(CreateProductRequest request)
         {
             var command = new CreateProductCommand(
