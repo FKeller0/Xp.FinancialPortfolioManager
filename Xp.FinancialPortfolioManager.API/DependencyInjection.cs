@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Coravel;
+using Microsoft.OpenApi.Models;
 using Xp.FinancialPortfolioManager.API.Services;
 using Xp.FinancialPortfolioManager.Application.Common.Interfaces;
 
@@ -6,15 +7,20 @@ namespace Xp.FinancialPortfolioManager.API
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddPresentation(this IServiceCollection services)
+        public static IServiceCollection AddPresentation(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddProblemDetails();
             services.AddHttpContextAccessor();
+            services.AddScheduler();
+            services.AddTransient<ExpiryJobInvocable>();
+            
+            services.Configure<SmtpSettings>(options => configuration.GetSection("SmtpSettings").Bind(options));            
 
             services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
+            services.AddScoped<IMailerService, MailerService>();
 
             return services;
         }

@@ -4,7 +4,6 @@ using Xp.FinancialPortfolioManager.Application.Common.Behaviors;
 using Xp.FinancialPortfolioManager.Application.Common.Interfaces;
 using Xp.FinancialPortfolioManager.Application.Common.Services;
 
-
 namespace Xp.FinancialPortfolioManager.Application
 {
     public static class DependencyInjection
@@ -17,9 +16,9 @@ namespace Xp.FinancialPortfolioManager.Application
                 
                 options.AddOpenBehavior(typeof(ValidationBehavior<,>));
                 options.AddOpenBehavior(typeof(AuthorizationBehavior<,>));
-            });
+            });            
 
-            services.AddScoped<IIsValidUser, IsValidUser>();
+            services.AddScoped<IIsValidUser, IsValidUser>();            
 
             services.AddValidatorsFromAssemblyContaining(typeof(DependencyInjection));
 

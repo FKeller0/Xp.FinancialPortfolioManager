@@ -1,19 +1,24 @@
 using Xp.FinancialPortfolioManager.API;
 using Xp.FinancialPortfolioManager.Application;
 using Xp.FinancialPortfolioManager.Infrastructure;
+using Coravel;
+using Xp.FinancialPortfolioManager.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services
-        .AddPresentation()
+        .AddPresentation(builder.Configuration)
         .AddApplication()
-        .AddInfrastructure(builder.Configuration);
+        .AddInfrastructure(builder.Configuration);    
 }
-// Add services to the container.
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.Services.UseScheduler(scheduler =>
+{
+    scheduler.Schedule<ExpiryJobInvocable>().EveryMinute().PreventOverlapping(nameof(ExpiryJobInvocable));
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
