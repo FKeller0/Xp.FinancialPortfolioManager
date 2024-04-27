@@ -12,7 +12,7 @@ Passos para executar:
   - Update-Database com o projeto de Infraestrutura selecionado para gerar o banco de dados SQLITE
   - Executar(F5)
 
-A Aplicação oferece suporte ao Swagger e seus métodos possuem descrição.
+A Aplicação oferece suporte ao Swagger e seus métodos possuem uma breve descrição.
 
 Um Usuário padrão da aplicação foi configurado para controler de acesso e criação de perfil de assessores
   
